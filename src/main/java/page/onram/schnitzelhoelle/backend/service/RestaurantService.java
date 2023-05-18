@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import page.onram.schnitzelhoelle.backend.controller.exception.RestaurantNotFoundException;
 import page.onram.schnitzelhoelle.backend.dao.IRestaurantDao;
@@ -19,6 +20,11 @@ public class RestaurantService implements IRestaurantService {
         this.restaurantDao = restaurantDao;
     }
 
+    @Transactional
+    public void create(Restaurant s) {
+        restaurantDao.create(s);
+    }
+
     public Restaurant findById(int id) throws RestaurantNotFoundException {
         var restaurant = restaurantDao.findById(id);
         if (restaurant == null) {
@@ -26,11 +32,9 @@ public class RestaurantService implements IRestaurantService {
         } else {
             return restaurant;
         }
-
     }
 
     public List<Restaurant> findAll() throws RestaurantNotFoundException {
-
         var allRestaurants = restaurantDao.findAll();
         if (allRestaurants.isEmpty()) {
             throw new RestaurantNotFoundException("No restaurants in db");
@@ -39,16 +43,15 @@ public class RestaurantService implements IRestaurantService {
         }
     }
 
-    public void delete(int id) {
-        restaurantDao.delete(id);
-    }
-
-    public void create(Restaurant s) {
-        restaurantDao.create(s);
-    }
-
+    @Transactional
     public void update(Restaurant s) {
         restaurantDao.update(s);
 
     }
+
+    @Transactional
+    public void delete(int id) {
+        restaurantDao.delete(id);
+    }
+
 }

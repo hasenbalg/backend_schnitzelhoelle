@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
@@ -20,7 +19,6 @@ public class SchnitzelDao implements ISchnitzelDao {
     }
 
     @Override
-    @Transactional
     public void create(Schnitzel schnitzel) {
         entityManager.persist(schnitzel);
     }
@@ -50,20 +48,17 @@ public class SchnitzelDao implements ISchnitzelDao {
     }
 
     @Override
-    @Transactional
     public void update(Schnitzel schnitzel) {
         entityManager.merge(schnitzel);
     }
 
     @Override
-    @Transactional
     public void delete(int id) {
         var schnitzel = entityManager.find(Schnitzel.class, id);
         entityManager.remove(schnitzel);
     }
 
     @Override
-    @Transactional
     public int deleteAll() {
         return entityManager.createQuery("DELETEFROM Schnitzel").executeUpdate();
     }

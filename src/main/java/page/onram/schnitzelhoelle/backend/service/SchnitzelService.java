@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import page.onram.schnitzelhoelle.backend.controller.exception.SchnitzelNotFoundException;
 import page.onram.schnitzelhoelle.backend.dao.ISchnitzelDao;
@@ -17,6 +18,11 @@ public class SchnitzelService implements ISchnitzelService {
     @Autowired
     public SchnitzelService(ISchnitzelDao schnitzelDao) {
         this.schnitzelDao = schnitzelDao;
+    }
+
+    @Transactional
+    public void create(Schnitzel s) {
+        schnitzelDao.create(s);
     }
 
     public Schnitzel findById(int id) throws SchnitzelNotFoundException {
@@ -39,18 +45,16 @@ public class SchnitzelService implements ISchnitzelService {
         }
     }
 
+    @Transactional
+    public void update(Schnitzel s) {
+
+        schnitzelDao.update(s);
+    }
+
+    @Transactional
     public void delete(int id) {
 
         schnitzelDao.delete(id);
     }
 
-    public void create(Schnitzel s) {
-        schnitzelDao.create(s);
-    }
-
-    public void update(Schnitzel s) {
-
-        schnitzelDao.update(s);
-
-    }
 }

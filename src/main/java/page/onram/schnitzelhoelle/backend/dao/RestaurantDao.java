@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
@@ -20,7 +19,6 @@ public class RestaurantDao implements IRestaurantDao {
     }
 
     @Override
-    @Transactional
     public void create(Restaurant restaurant) {
         entityManager.persist(restaurant);
     }
@@ -50,20 +48,17 @@ public class RestaurantDao implements IRestaurantDao {
     }
 
     @Override
-    @Transactional
     public void update(Restaurant restaurant) {
         entityManager.merge(restaurant);
     }
 
     @Override
-    @Transactional
     public void delete(int id) {
         var restaurant = entityManager.find(Restaurant.class, id);
         entityManager.remove(restaurant);
     }
 
     @Override
-    @Transactional
     public int deleteAll() {
         return entityManager.createQuery("DELETEFROM Restaurant").executeUpdate();
     }
