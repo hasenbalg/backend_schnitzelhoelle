@@ -12,7 +12,7 @@ public interface IRestaurantDao {
 
     public Restaurant findById(int id);
 
-    public void update(Restaurant restaurant);
+    public Restaurant update(Restaurant restaurant);
 
     public void delete(int id);
 

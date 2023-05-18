@@ -48,8 +48,9 @@ public class SchnitzelDao implements ISchnitzelDao {
     }
 
     @Override
-    public void update(Schnitzel schnitzel) {
-        entityManager.merge(schnitzel);
+    public Schnitzel update(Schnitzel schnitzel) {
+      var updatedSchnitzel =   entityManager.merge(schnitzel);
+      return updatedSchnitzel;
     }
 
     @Override

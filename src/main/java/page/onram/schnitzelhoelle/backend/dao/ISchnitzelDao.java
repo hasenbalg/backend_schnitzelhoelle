@@ -11,7 +11,7 @@ public interface ISchnitzelDao {
 
     public Schnitzel findById(int id);
 
-    public void update(Schnitzel schnitzel);
+    public Schnitzel update(Schnitzel schnitzel);
 
     public void delete(int id);
 

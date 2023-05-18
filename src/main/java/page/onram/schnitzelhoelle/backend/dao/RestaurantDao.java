@@ -31,13 +31,13 @@ public class RestaurantDao implements IRestaurantDao {
 
     public List<Restaurant> findAllOorderedByName() {
         TypedQuery<Restaurant> allRestaurantsQuery = entityManager.createQuery("FROM Restaurant ORDERED BY name ASC",
-        Restaurant.class);
+                Restaurant.class);
         return allRestaurantsQuery.getResultList();
     }
 
     public List<Restaurant> findByName(String name) {
         TypedQuery<Restaurant> restaurantsQuery = entityManager.createQuery("FROM Restaurant WHERE name = nameValue",
-        Restaurant.class);
+                Restaurant.class);
         restaurantsQuery.setParameter("nameValue", name);
         return restaurantsQuery.getResultList();
     }
@@ -48,8 +48,9 @@ public class RestaurantDao implements IRestaurantDao {
     }
 
     @Override
-    public void update(Restaurant restaurant) {
-        entityManager.merge(restaurant);
+    public Restaurant update(Restaurant restaurant) {
+        var updatedRestaurant = entityManager.merge(restaurant);
+        return updatedRestaurant;
     }
 
     @Override
