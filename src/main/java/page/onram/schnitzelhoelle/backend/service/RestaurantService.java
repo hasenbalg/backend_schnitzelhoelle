@@ -1,23 +1,19 @@
-package page.onram.schnitzelhoelle.backend.repo;
+package page.onram.schnitzelhoelle.backend.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import page.onram.schnitzelhoelle.backend.controller.exception.RestaurantNotFoundException;
-import page.onram.schnitzelhoelle.backend.controller.exception.SchnitzelNotFoundException;
 import page.onram.schnitzelhoelle.backend.dao.IRestaurantDao;
-import page.onram.schnitzelhoelle.backend.dao.RestaurantDao;
 import page.onram.schnitzelhoelle.backend.model.Restaurant;
 
-@Component
-public class RestaurantRepo {
+public class RestaurantService {
 
     private IRestaurantDao restaurantDao;
 
     @Autowired
-    public RestaurantRepo(RestaurantDao restaurantDao) {
+    public RestaurantService(IRestaurantDao restaurantDao) {
         this.restaurantDao = restaurantDao;
     }
 
@@ -28,27 +24,29 @@ public class RestaurantRepo {
         } else {
             return restaurant;
         }
+
     }
 
     public List<Restaurant> findAll() throws RestaurantNotFoundException {
+
         var allRestaurants = restaurantDao.findAll();
         if (allRestaurants.isEmpty()) {
-            throw new RestaurantNotFoundException("no restaurants found in db");
+            throw new RestaurantNotFoundException("No restaurants in db");
         } else {
             return allRestaurants;
         }
     }
 
-    public void deleteById(int id) throws Exception {
+    public void deleteById(int id) {
         restaurantDao.delete(id);
     }
 
-    public void create(Restaurant r) {
-        restaurantDao.create(r);
+    public void create(Restaurant s) {
+        restaurantDao.create(s);
     }
 
-    public void update(Restaurant r) {
-        restaurantDao.update(r);
+    public void update(Restaurant s) {
+        restaurantDao.update(s);
 
     }
 }

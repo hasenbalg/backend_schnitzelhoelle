@@ -14,21 +14,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 import page.onram.schnitzelhoelle.backend.controller.exception.RestaurantNotFoundException;
 import page.onram.schnitzelhoelle.backend.model.Restaurant;
-import page.onram.schnitzelhoelle.backend.repo.RestaurantRepo;
+import page.onram.schnitzelhoelle.backend.service.IRestaurantService;
 
 @RestController
 @RequestMapping("/api")
 public class RestaurantController {
-    private RestaurantRepo restaurantRepo;
+    private IRestaurantService restaurantService;
 
-    public RestaurantController(RestaurantRepo restaurantRepo) {
-        this.restaurantRepo = restaurantRepo;
+    public RestaurantController(IRestaurantService restaurantRepo) {
+        this.restaurantService = restaurantRepo;
     };
 
     @GetMapping("/restaurants")
     public List<Restaurant> getAll() throws RestaurantNotFoundException {
 
-        var allRestaurants = restaurantRepo.findAll();
+        var allRestaurants = restaurantService.findAll();
         if (allRestaurants.isEmpty()) {
             throw new RestaurantNotFoundException("no restaurants found");
         }
@@ -39,13 +39,13 @@ public class RestaurantController {
 
     @GetMapping("/restaurants/{id}")
     public Restaurant getById(@PathVariable("id") int id) throws Exception {
-        return restaurantRepo.findById(id);
+        return restaurantService.findById(id);
     }
 
     @DeleteMapping("/restaurants/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") int id) {
         try {
-            restaurantRepo.deleteById(id);
+            restaurantService.delete(id);
             return ResponseEntity.noContent().build();
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
@@ -55,7 +55,7 @@ public class RestaurantController {
     @PostMapping("/restaurants")
     public ResponseEntity<?> create(@RequestBody Restaurant newRestaurant) {
         try {
-            restaurantRepo.create(newRestaurant);
+            restaurantService.create(newRestaurant);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
@@ -66,7 +66,7 @@ public class RestaurantController {
     public ResponseEntity<?> update(
             @RequestBody Restaurant updatedRestaurant) {
         try {
-            restaurantRepo.update(updatedRestaurant);
+            restaurantService.update(updatedRestaurant);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();

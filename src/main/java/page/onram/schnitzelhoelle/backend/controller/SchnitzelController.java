@@ -14,31 +14,31 @@ import org.springframework.web.bind.annotation.RestController;
 
 import page.onram.schnitzelhoelle.backend.controller.exception.SchnitzelNotFoundException;
 import page.onram.schnitzelhoelle.backend.model.Schnitzel;
-import page.onram.schnitzelhoelle.backend.repo.SchnitzelRepo;
+import page.onram.schnitzelhoelle.backend.service.ISchnitzelService;
 
 @RestController
 @RequestMapping("/api")
 public class SchnitzelController {
-    private SchnitzelRepo schnitzelRepo;
+    private ISchnitzelService schnitzelService;
 
-    public SchnitzelController(SchnitzelRepo schnitzelRepo) {
-        this.schnitzelRepo = schnitzelRepo;
+    public SchnitzelController(ISchnitzelService schnitzelService) {
+        this.schnitzelService = schnitzelService;
     };
 
     @GetMapping("/schnitzels")
     public List<Schnitzel> getAll() throws SchnitzelNotFoundException {
-        return schnitzelRepo.findAll();
+        return schnitzelService.findAll();
     }
 
     @GetMapping("/schnitzels/{id}")
     public Schnitzel getById(@PathVariable("id") int id) throws Exception {
-        return schnitzelRepo.findById(id);
+        return schnitzelService.findById(id);
     }
 
     @DeleteMapping("/schnitzels/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") int id) {
         try {
-            schnitzelRepo.deleteById(id);
+            schnitzelService.delete(id);
             return ResponseEntity.noContent().build();
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
@@ -48,7 +48,7 @@ public class SchnitzelController {
     @PostMapping("/schnitzels")
     public ResponseEntity<?> create(@RequestBody Schnitzel newSchnitzel) {
         try {
-            schnitzelRepo.create(newSchnitzel);
+            schnitzelService.create(newSchnitzel);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
@@ -59,7 +59,7 @@ public class SchnitzelController {
     public ResponseEntity<?> update(
             @RequestBody Schnitzel updatedSchnitzel) {
         try {
-            schnitzelRepo.update(updatedSchnitzel);
+            schnitzelService.update(updatedSchnitzel);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();

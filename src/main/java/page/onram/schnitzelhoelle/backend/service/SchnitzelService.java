@@ -1,22 +1,19 @@
-package page.onram.schnitzelhoelle.backend.repo;
+package page.onram.schnitzelhoelle.backend.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import page.onram.schnitzelhoelle.backend.controller.exception.SchnitzelNotFoundException;
 import page.onram.schnitzelhoelle.backend.dao.ISchnitzelDao;
-import page.onram.schnitzelhoelle.backend.dao.SchnitzelDao;
 import page.onram.schnitzelhoelle.backend.model.Schnitzel;
 
-@Component
-public class SchnitzelRepo {
+public class SchnitzelService {
 
     private ISchnitzelDao schnitzelDao;
 
     @Autowired
-    public SchnitzelRepo(SchnitzelDao schnitzelDao) {
+    public SchnitzelService(ISchnitzelDao schnitzelDao) {
         this.schnitzelDao = schnitzelDao;
     }
 
