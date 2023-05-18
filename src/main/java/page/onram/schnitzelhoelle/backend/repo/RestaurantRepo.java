@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import page.onram.schnitzelhoelle.backend.controller.exception.SchnitzelNotFoundException;
 import page.onram.schnitzelhoelle.backend.dao.IRestaurantDao;
 import page.onram.schnitzelhoelle.backend.dao.RestaurantDao;
 import page.onram.schnitzelhoelle.backend.model.Restaurant;
@@ -24,11 +25,11 @@ public class RestaurantRepo {
 
     }
 
-    public List<Restaurant> findAll() throws Exception {
+    public List<Restaurant> findAll() throws SchnitzelNotFoundException {
         return restaurantDao.findAll();
     }
 
-    public void deleteById(int id) {
+    public void deleteById(int id) throws SchnitzelNotFoundException {
         restaurantDao.delete(id);
     }
 
@@ -36,7 +37,7 @@ public class RestaurantRepo {
         restaurantDao.create(r);
     }
 
-    public void update(Restaurant r) throws Exception {
+    public void update(Restaurant r) throws SchnitzelNotFoundException {
         restaurantDao.update(r);
 
     }

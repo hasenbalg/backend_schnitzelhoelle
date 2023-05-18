@@ -2,8 +2,10 @@ package page.onram.schnitzelhoelle.backend.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import page.onram.schnitzelhoelle.backend.controller.exception.SchnitzelErrorResponse;
+import page.onram.schnitzelhoelle.backend.controller.exception.SchnitzelNotFoundException;
 import page.onram.schnitzelhoelle.backend.model.Schnitzel;
 import page.onram.schnitzelhoelle.backend.repo.SchnitzelRepo;
 
@@ -25,7 +29,7 @@ public class SchnitzelController {
     };
 
     @GetMapping("/schnitzel")
-    public List<Schnitzel> getAll() throws Exception {
+    public List<Schnitzel> getAll() throws SchnitzelNotFoundException {
         return schnitzelRepo.findAll();
     }
 
@@ -65,4 +69,12 @@ public class SchnitzelController {
         }
     }
 
+
+
+    @ExceptionHandler
+    public ResponseEntity<SchnitzelErrorResponse> handleException(SchnitzelNotFoundException exc) {
+        SchnitzelErrorResponse errorResponse = new SchnitzelErrorResponse(HttpStatus.NOT_FOUND.value(), exc.getMessage(),
+                System.currentTimeMillis());
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
 }

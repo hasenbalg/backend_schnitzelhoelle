@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import page.onram.schnitzelhoelle.backend.controller.exception.SchnitzelNotFoundException;
 import page.onram.schnitzelhoelle.backend.dao.ISchnitzelDao;
 import page.onram.schnitzelhoelle.backend.dao.SchnitzelDao;
 import page.onram.schnitzelhoelle.backend.model.Schnitzel;
@@ -24,11 +25,18 @@ public class SchnitzelRepo {
 
     }
 
-    public List<Schnitzel> findAll() throws Exception {
-        return schnitzelDao.findAll();
+    public List<Schnitzel> findAll() throws SchnitzelNotFoundException {
+
+        var allSchnitzels = schnitzelDao.findAll();
+        if (allSchnitzels.isEmpty()) {
+            throw new SchnitzelNotFoundException("No schnitzels in db");
+        } else {
+            return allSchnitzels;
+        }
     }
 
-    public void deleteById(int id) {
+    public void deleteById(int id) throws SchnitzelNotFoundException {
+
         schnitzelDao.delete(id);
     }
 
@@ -36,7 +44,8 @@ public class SchnitzelRepo {
         schnitzelDao.create(s);
     }
 
-    public void update(Schnitzel s) throws Exception {
+    public void update(Schnitzel s) throws SchnitzelNotFoundException {
+
         schnitzelDao.update(s);
 
     }

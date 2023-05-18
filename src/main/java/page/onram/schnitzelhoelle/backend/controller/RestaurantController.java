@@ -2,8 +2,10 @@ package page.onram.schnitzelhoelle.backend.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import page.onram.schnitzelhoelle.backend.controller.exception.RestaurantErrorResponse;
+import page.onram.schnitzelhoelle.backend.controller.exception.RestaurantNotFoundException;
 import page.onram.schnitzelhoelle.backend.model.Restaurant;
 import page.onram.schnitzelhoelle.backend.repo.RestaurantRepo;
 
@@ -25,8 +29,15 @@ public class RestaurantController {
     };
 
     @GetMapping("/restaurant")
-    public List<Restaurant> getAll() throws Exception {
-        return restaurantRepo.findAll();
+    public List<Restaurant> getAll() throws RestaurantNotFoundException {
+
+        var allRestaurants = restaurantRepo.findAll();
+        if (allRestaurants.isEmpty()) {
+            throw new RestaurantNotFoundException("no restaurants found");
+        }
+
+        return allRestaurants;
+    
     }
 
     @GetMapping("/restaurant/{id}")
@@ -63,6 +74,13 @@ public class RestaurantController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<RestaurantErrorResponse> handleException(RestaurantNotFoundException exc) {
+        RestaurantErrorResponse errorResponse = new RestaurantErrorResponse(HttpStatus.NOT_FOUND.value(), exc.getMessage(),
+                System.currentTimeMillis());
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
 }
