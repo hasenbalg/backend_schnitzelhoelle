@@ -3,12 +3,14 @@ package page.onram.schnitzelhoelle.backend.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import page.onram.schnitzelhoelle.backend.controller.exception.SchnitzelNotFoundException;
 import page.onram.schnitzelhoelle.backend.dao.ISchnitzelDao;
 import page.onram.schnitzelhoelle.backend.model.Schnitzel;
 
-public class SchnitzelService {
+@Service
+public class SchnitzelService implements ISchnitzelService {
 
     private ISchnitzelDao schnitzelDao;
 
@@ -37,7 +39,7 @@ public class SchnitzelService {
         }
     }
 
-    public void deleteById(int id) {
+    public void delete(int id) {
 
         schnitzelDao.delete(id);
     }

@@ -3,12 +3,14 @@ package page.onram.schnitzelhoelle.backend.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import page.onram.schnitzelhoelle.backend.controller.exception.RestaurantNotFoundException;
 import page.onram.schnitzelhoelle.backend.dao.IRestaurantDao;
 import page.onram.schnitzelhoelle.backend.model.Restaurant;
 
-public class RestaurantService {
+@Service
+public class RestaurantService implements IRestaurantService {
 
     private IRestaurantDao restaurantDao;
 
@@ -37,7 +39,7 @@ public class RestaurantService {
         }
     }
 
-    public void deleteById(int id) {
+    public void delete(int id) {
         restaurantDao.delete(id);
     }
 
