@@ -1,0 +1,17 @@
+
+spring:
+  main:
+    banner-mode: "off"
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:mysql://localhost:3306/schnitzelhoelle
+    username: schnitzelhoelle
+    password: schnitzelhoelle
+    driver-class-name: com.mysql.cj.jdbc.Driver
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql: TRACE

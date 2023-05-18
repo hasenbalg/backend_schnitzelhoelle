@@ -1,6 +1,5 @@
 package page.onram.schnitzelhoelle.backend.controller;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -10,13 +9,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import page.onram.schnitzelhoelle.backend.model.Schnitzel;
 import page.onram.schnitzelhoelle.backend.repo.SchnitzelRepo;
 
 @RestController
+@RequestMapping("/api")
 public class SchnitzelController {
     private SchnitzelRepo schnitzelRepo;
 
@@ -56,7 +56,7 @@ public class SchnitzelController {
 
     @PutMapping("/schnitzel")
     public ResponseEntity<?> update(
-        @RequestBody Schnitzel updatedSchnitzel) {
+            @RequestBody Schnitzel updatedSchnitzel) {
         try {
             schnitzelRepo.update(updatedSchnitzel);
             return ResponseEntity.ok().build();

@@ -2,10 +2,30 @@ package page.onram.schnitzelhoelle.backend.model;
 
 import java.util.Date;
 
+import org.hibernate.annotations.CreationTimestamp;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Schnitzel {
-    protected final int id;
-    protected final String name;
-    protected final Date createdAt;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected int id;
+    protected String name;
+    @CreationTimestamp
+    protected Date createdAt;
+
+    @Override
+    public String toString() {
+        return "{" +
+                " id='" + getId() + "'" +
+                ", name='" + getName() + "'" +
+                ", createdAt='" + getCreatedAt() + "'" +
+                "}";
+    }
 
     public int getId() {
         return this.id;
@@ -19,8 +39,10 @@ public class Schnitzel {
         return this.createdAt;
     }
 
-    public Schnitzel(int id, String name, Date createdAt) {
-        this.id = id;
+    public Schnitzel() {
+    }
+
+    public Schnitzel(String name, Date createdAt) {
         this.createdAt = createdAt;
         this.name = name;
     }
