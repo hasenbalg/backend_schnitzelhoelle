@@ -20,8 +20,13 @@ public class SchnitzelRepo {
         this.schnitzelDao = schnitzelDao;
     }
 
-    public Schnitzel findById(int id) throws Exception {
-        return schnitzelDao.findById(id);
+    public Schnitzel findById(int id) throws SchnitzelNotFoundException {
+        var schnitzel = schnitzelDao.findById(id);
+        if (schnitzel == null) {
+            throw new SchnitzelNotFoundException("schnitzel with id " + id + " not found");
+        } else {
+            return schnitzel;
+        }
 
     }
 
@@ -35,7 +40,7 @@ public class SchnitzelRepo {
         }
     }
 
-    public void deleteById(int id) throws SchnitzelNotFoundException {
+    public void deleteById(int id) {
 
         schnitzelDao.delete(id);
     }
@@ -44,7 +49,7 @@ public class SchnitzelRepo {
         schnitzelDao.create(s);
     }
 
-    public void update(Schnitzel s) throws SchnitzelNotFoundException {
+    public void update(Schnitzel s) {
 
         schnitzelDao.update(s);
 

@@ -2,10 +2,8 @@ package page.onram.schnitzelhoelle.backend.controller;
 
 import java.util.List;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import page.onram.schnitzelhoelle.backend.controller.exception.RestaurantErrorResponse;
 import page.onram.schnitzelhoelle.backend.controller.exception.RestaurantNotFoundException;
 import page.onram.schnitzelhoelle.backend.model.Restaurant;
 import page.onram.schnitzelhoelle.backend.repo.RestaurantRepo;
@@ -28,7 +25,7 @@ public class RestaurantController {
         this.restaurantRepo = restaurantRepo;
     };
 
-    @GetMapping("/restaurant")
+    @GetMapping("/restaurants")
     public List<Restaurant> getAll() throws RestaurantNotFoundException {
 
         var allRestaurants = restaurantRepo.findAll();
@@ -40,12 +37,12 @@ public class RestaurantController {
 
     }
 
-    @GetMapping("/restaurant/{id}")
+    @GetMapping("/restaurants/{id}")
     public Restaurant getById(@PathVariable("id") int id) throws Exception {
         return restaurantRepo.findById(id);
     }
 
-    @DeleteMapping("/restaurant/{id}")
+    @DeleteMapping("/restaurants/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") int id) {
         try {
             restaurantRepo.deleteById(id);
@@ -55,7 +52,7 @@ public class RestaurantController {
         }
     }
 
-    @PostMapping("/restaurant")
+    @PostMapping("/restaurants")
     public ResponseEntity<?> create(@RequestBody Restaurant newRestaurant) {
         try {
             restaurantRepo.create(newRestaurant);
@@ -65,7 +62,7 @@ public class RestaurantController {
         }
     }
 
-    @PutMapping("/restaurant")
+    @PutMapping("/restaurants")
     public ResponseEntity<?> update(
             @RequestBody Restaurant updatedRestaurant) {
         try {
@@ -76,20 +73,5 @@ public class RestaurantController {
         }
     }
 
-    @ExceptionHandler
-    public ResponseEntity<RestaurantErrorResponse> handleException(RestaurantNotFoundException exc) {
-        RestaurantErrorResponse errorResponse = new RestaurantErrorResponse(HttpStatus.NOT_FOUND.value(),
-                exc.getMessage(),
-                System.currentTimeMillis());
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler
-    public ResponseEntity<RestaurantErrorResponse> handleException(Exception exc) {
-        RestaurantErrorResponse errorResponse = new RestaurantErrorResponse(HttpStatus.BAD_REQUEST.value(),
-                exc.getMessage(),
-                System.currentTimeMillis());
-        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
-    }
-
+   
 }
