@@ -19,8 +19,9 @@ public class RestaurantDao implements IRestaurantDao {
     }
 
     @Override
-    public void create(Restaurant restaurant) {
+    public Restaurant create(Restaurant restaurant) {
         entityManager.persist(restaurant);
+        return restaurant;
     }
 
     @Override

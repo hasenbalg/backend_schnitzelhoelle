@@ -5,7 +5,7 @@ import java.util.List;
 import page.onram.schnitzelhoelle.backend.model.Schnitzel;
 
 public interface ISchnitzelDao {
-    public void create(Schnitzel schnitzel);
+    public Schnitzel create(Schnitzel schnitzel);
 
     public List<Schnitzel> findAll();
 

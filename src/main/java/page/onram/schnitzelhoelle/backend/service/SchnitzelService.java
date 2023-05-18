@@ -21,8 +21,8 @@ public class SchnitzelService implements ISchnitzelService {
     }
 
     @Transactional
-    public void create(Schnitzel s) {
-        schnitzelDao.create(s);
+    public Schnitzel create(Schnitzel s) {
+        return schnitzelDao.create(s);
     }
 
     public Schnitzel findById(int id) throws SchnitzelNotFoundException {
@@ -46,14 +46,12 @@ public class SchnitzelService implements ISchnitzelService {
     }
 
     @Transactional
-    public void update(Schnitzel s) {
-
-        schnitzelDao.update(s);
+    public Schnitzel update(Schnitzel s) {
+        return schnitzelDao.update(s);
     }
 
     @Transactional
     public void delete(int id) {
-
         schnitzelDao.delete(id);
     }
 

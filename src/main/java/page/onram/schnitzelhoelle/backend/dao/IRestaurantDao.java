@@ -6,7 +6,7 @@ import page.onram.schnitzelhoelle.backend.model.Restaurant;
 
 
 public interface IRestaurantDao {
-    public void create(Restaurant restaurant);
+    public Restaurant create(Restaurant restaurant);
 
     public List<Restaurant> findAll();
 

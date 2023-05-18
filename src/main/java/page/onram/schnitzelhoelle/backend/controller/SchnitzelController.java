@@ -25,6 +25,12 @@ public class SchnitzelController {
         this.schnitzelService = schnitzelService;
     };
 
+    @PostMapping("/schnitzels")
+    public Schnitzel create(@RequestBody Schnitzel newSchnitzel) {
+        return schnitzelService.create(newSchnitzel);
+
+    }
+
     @GetMapping("/schnitzels")
     public List<Schnitzel> getAll() throws SchnitzelNotFoundException {
         return schnitzelService.findAll();
@@ -35,6 +41,13 @@ public class SchnitzelController {
         return schnitzelService.findById(id);
     }
 
+    @PutMapping("/schnitzels")
+    public Schnitzel update(
+            @RequestBody Schnitzel updatedSchnitzel) {
+        return schnitzelService.update(updatedSchnitzel);
+
+    }
+
     @DeleteMapping("/schnitzels/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") int id) {
         try {
@@ -42,27 +55,6 @@ public class SchnitzelController {
             return ResponseEntity.noContent().build();
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
-        }
-    }
-
-    @PostMapping("/schnitzels")
-    public ResponseEntity<?> create(@RequestBody Schnitzel newSchnitzel) {
-        try {
-            schnitzelService.create(newSchnitzel);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
-    }
-
-    @PutMapping("/schnitzels")
-    public ResponseEntity<?> update(
-            @RequestBody Schnitzel updatedSchnitzel) {
-        try {
-            schnitzelService.update(updatedSchnitzel);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
         }
     }
 

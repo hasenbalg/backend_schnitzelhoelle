@@ -19,8 +19,9 @@ public class SchnitzelDao implements ISchnitzelDao {
     }
 
     @Override
-    public void create(Schnitzel schnitzel) {
+    public Schnitzel create(Schnitzel schnitzel) {
         entityManager.persist(schnitzel);
+        return schnitzel;
     }
 
     @Override
@@ -49,8 +50,8 @@ public class SchnitzelDao implements ISchnitzelDao {
 
     @Override
     public Schnitzel update(Schnitzel schnitzel) {
-      var updatedSchnitzel =   entityManager.merge(schnitzel);
-      return updatedSchnitzel;
+        var updatedSchnitzel = entityManager.merge(schnitzel);
+        return updatedSchnitzel;
     }
 
     @Override

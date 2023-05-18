@@ -18,15 +18,6 @@ public class Schnitzel {
     @CreationTimestamp
     protected Date createdAt;
 
-    @Override
-    public String toString() {
-        return "{" +
-                " id='" + getId() + "'" +
-                ", name='" + getName() + "'" +
-                ", createdAt='" + getCreatedAt() + "'" +
-                "}";
-    }
-
     public int getId() {
         return this.id;
     }
@@ -45,6 +36,15 @@ public class Schnitzel {
     public Schnitzel(String name, Date createdAt) {
         this.createdAt = createdAt;
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                " id='" + getId() + "'" +
+                ", name='" + getName() + "'" +
+                ", createdAt='" + getCreatedAt() + "'" +
+                "}";
     }
 
 }

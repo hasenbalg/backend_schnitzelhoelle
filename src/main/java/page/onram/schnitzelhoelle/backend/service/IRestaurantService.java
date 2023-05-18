@@ -11,7 +11,7 @@ public interface IRestaurantService {
 
     Restaurant findById(int id);
 
-    void update(Restaurant s);
+    Restaurant update(Restaurant s);
 
     void delete(int id);
 }

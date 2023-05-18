@@ -25,6 +25,17 @@ public class RestaurantController {
         this.restaurantService = restaurantRepo;
     };
 
+    @PostMapping("/restaurants")
+    public ResponseEntity<?> create(@RequestBody Restaurant newRestaurant) {
+        try {
+            restaurantService.create(newRestaurant);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+
     @GetMapping("/restaurants")
     public List<Restaurant> getAll() throws RestaurantNotFoundException {
 
@@ -42,6 +53,14 @@ public class RestaurantController {
         return restaurantService.findById(id);
     }
 
+   
+    @PutMapping("/restaurants")
+    public Restaurant update(
+            @RequestBody Restaurant updatedRestaurant) {
+        return restaurantService.update(updatedRestaurant);
+
+    }
+
     @DeleteMapping("/restaurants/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") int id) {
         try {
@@ -52,26 +71,4 @@ public class RestaurantController {
         }
     }
 
-    @PostMapping("/restaurants")
-    public ResponseEntity<?> create(@RequestBody Restaurant newRestaurant) {
-        try {
-            restaurantService.create(newRestaurant);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
-    }
-
-    @PutMapping("/restaurants")
-    public ResponseEntity<?> update(
-            @RequestBody Restaurant updatedRestaurant) {
-        try {
-            restaurantService.update(updatedRestaurant);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
-    }
-
-   
 }
