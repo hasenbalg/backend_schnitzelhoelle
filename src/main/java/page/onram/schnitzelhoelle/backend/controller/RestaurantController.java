@@ -37,7 +37,7 @@ public class RestaurantController {
         }
 
         return allRestaurants;
-    
+
     }
 
     @GetMapping("/restaurant/{id}")
@@ -78,9 +78,18 @@ public class RestaurantController {
 
     @ExceptionHandler
     public ResponseEntity<RestaurantErrorResponse> handleException(RestaurantNotFoundException exc) {
-        RestaurantErrorResponse errorResponse = new RestaurantErrorResponse(HttpStatus.NOT_FOUND.value(), exc.getMessage(),
+        RestaurantErrorResponse errorResponse = new RestaurantErrorResponse(HttpStatus.NOT_FOUND.value(),
+                exc.getMessage(),
                 System.currentTimeMillis());
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<RestaurantErrorResponse> handleException(Exception exc) {
+        RestaurantErrorResponse errorResponse = new RestaurantErrorResponse(HttpStatus.BAD_REQUEST.value(),
+                exc.getMessage(),
+                System.currentTimeMillis());
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
 }

@@ -77,4 +77,11 @@ public class SchnitzelController {
                 System.currentTimeMillis());
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler
+    public ResponseEntity<SchnitzelErrorResponse> handleException(Exception exc) {
+        SchnitzelErrorResponse errorResponse = new SchnitzelErrorResponse(HttpStatus.BAD_REQUEST.value(), exc.getMessage(),
+                System.currentTimeMillis());
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
 }
