@@ -11,6 +11,9 @@ spring:
     username: schnitzelhoelle
     password: schnitzelhoelle
     driver-class-name: com.mysql.cj.jdbc.Driver
+  data:
+    rest:
+      base-path: "/api"
 logging:
   level:
     org.hibernate.SQL: DEBUG
