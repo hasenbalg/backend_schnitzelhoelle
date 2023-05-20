@@ -27,6 +27,7 @@ public class SchnitzelController {
 
     @PostMapping("/schnitzels")
     public Schnitzel create(@RequestBody Schnitzel newSchnitzel) {
+        newSchnitzel.setId(0);
         return schnitzelService.create(newSchnitzel);
 
     }

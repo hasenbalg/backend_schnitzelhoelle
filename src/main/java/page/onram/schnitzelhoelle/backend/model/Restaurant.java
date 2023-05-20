@@ -1,9 +1,11 @@
 package page.onram.schnitzelhoelle.backend.model;
 
-import java.util.Date;
+import java.time.Instant;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,14 +22,20 @@ public class Restaurant {
     protected String city;
     protected String street;
     protected String houseNum;
+
+    // no setters
     @CreationTimestamp
-    protected Date createdAt;
+    @Column(updatable = false)
+    protected Instant createdAt;
+    @UpdateTimestamp
+    @Column(updatable = false)
+    protected Instant lastModifiedAt;
 
     public Restaurant() {
     }
 
-    public Restaurant(int id, String name, String country, String zipCode, String city, String street,
-            String houseNum, Date createdAt) {
+    public Restaurant(int id, String name, String country, String zipCode, String city, String street, String houseNum,
+            Instant createdAt, Instant lastModifiedAt) {
         this.id = id;
         this.name = name;
         this.country = country;
@@ -36,6 +44,7 @@ public class Restaurant {
         this.street = street;
         this.houseNum = houseNum;
         this.createdAt = createdAt;
+        this.lastModifiedAt = lastModifiedAt;
     }
 
     public int getId() {
@@ -94,52 +103,12 @@ public class Restaurant {
         this.houseNum = houseNum;
     }
 
-    public Date getCreatedAt() {
+    public Instant getCreatedAt() {
         return this.createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Restaurant id(int id) {
-        setId(id);
-        return this;
-    }
-
-    public Restaurant name(String name) {
-        setName(name);
-        return this;
-    }
-
-    public Restaurant country(String country) {
-        setCountry(country);
-        return this;
-    }
-
-    public Restaurant zipCode(String zipCode) {
-        setZipCode(zipCode);
-        return this;
-    }
-
-    public Restaurant city(String city) {
-        setCity(city);
-        return this;
-    }
-
-    public Restaurant street(String street) {
-        setStreet(street);
-        return this;
-    }
-
-    public Restaurant houseNum(String houseNum) {
-        setHouseNum(houseNum);
-        return this;
-    }
-
-    public Restaurant createdAt(Date createdAt) {
-        setCreatedAt(createdAt);
-        return this;
+    public Instant getLastModifiedAt() {
+        return this.lastModifiedAt;
     }
 
     @Override
@@ -153,6 +122,7 @@ public class Restaurant {
                 ", street='" + getStreet() + "'" +
                 ", houseNum='" + getHouseNum() + "'" +
                 ", createdAt='" + getCreatedAt() + "'" +
+                ", lastModifiedAt='" + getLastModifiedAt() + "'" +
                 "}";
     }
 

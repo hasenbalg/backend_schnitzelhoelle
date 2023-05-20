@@ -44,8 +44,8 @@ public class RestaurantService implements IRestaurantService {
     }
 
     @Transactional
-    public Restaurant update(Restaurant s) {
-        return restaurantDao.update(s);
+    public Restaurant update(Restaurant r) {
+        return restaurantDao.update(r);
     }
 
     @Transactional
