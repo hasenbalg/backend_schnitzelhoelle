@@ -5,11 +5,50 @@
 mvn spring-boot:run
 ```
 
+
+## create users
+```
+mysql --host=localhost --port 3306 --user=schnitzelhoelle --password=schnitzelhoelle schnitzelhoelle 
+```
+
+```sql
+DROP TABLE IF EXISTS authorities;
+DROP TABLE IF EXISTS users;
+
+CREATE TABLE users(
+    username VARCHAR(50) NOT NULL PRIMARY KEY,
+    password VARCHAR(50) NOT NULL,
+    enabled TINYINT NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO users VALUES 
+("peter", "{noop}tiger", 1),
+("paul", "{noop}tiger", 1),
+("mary", "{noop}tiger", 1);
+
+CREATE TABLE authorities(
+    username VARCHAR(50) NOT NULL,
+    authority VARCHAR(50) NOT NULL,
+
+    UNIQUE KEY authorities_idx_1 (username, authority),
+
+    CONSTRAINT authorities_idx_1
+    FOREIGN KEY (username) REFERENCES users (username)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO authorities VALUES 
+("peter", "ROLE_USER"),
+("paul", "ROLE_USER"),
+("paul", "ROLE_MANAGER"),
+("mary", "ROLE_ADMIN");
+
+```
+
 # testing 
 
 ## login
 ```
-curl -i -X POST http://localhost:8080/login --data 'username=john&password=tiger'
+curl -i -X POST http://localhost:8080/login --data 'username=paul&password=tiger'
 ```
 
 ## schnitzel
