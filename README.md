@@ -25,8 +25,8 @@ curl http://localhost:8080/api/schnitzels/1 | json_pp
 echo "update 1"
 curl --header "Content-Type: application/json" \
 --request PUT \
---data '{"id":1, "name":"XxxxXL Schnitzel"}' \
-http://localhost:8080/api/schnitzels
+--data '{"name":"XxxxXL Schnitzel"}' \
+http://localhost:8080/api/schnitzels/1
 
 echo "get 1"
 curl http://localhost:8080/api/schnitzels/1 | json_pp
@@ -55,8 +55,8 @@ curl http://localhost:8080/api/restaurants/1 | json_pp
 echo "update 1"
 curl --header "Content-Type: application/json" \
 --request PUT \
---data '{"id":1, "name":"XXXXXXXL Restaurant", "country": "DK", "houseNum": "444", "street": "Hahnenstr", "zipCode": "88888", "city":"Faxe"}' \
-http://localhost:8080/api/restaurants
+--data '{"name":"XXXXXXXL Restaurant", "country": "DK", "houseNum": "444", "street": "Hahnenstr", "zipCode": "88888", "city":"Faxe"}' \
+http://localhost:8080/api/restaurants/1
 
 echo "get 1"
 curl http://localhost:8080/api/restaurants/1 | json_pp
