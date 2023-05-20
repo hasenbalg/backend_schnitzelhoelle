@@ -55,7 +55,7 @@ curl http://localhost:8080/api/restaurants/1 | json_pp
 echo "update 1"
 curl --header "Content-Type: application/json" \
 --request PUT \
---data '{"id":1, "name":"XxxxXL Restaurant" }' \
+--data '{"id":1, "name":"XXXXXXXL Restaurant", "country": "DK", "houseNum": "444", "street": "Hahnenstr", "zipCode": "88888", "city":"Faxe"}' \
 http://localhost:8080/api/restaurants
 
 echo "get 1"

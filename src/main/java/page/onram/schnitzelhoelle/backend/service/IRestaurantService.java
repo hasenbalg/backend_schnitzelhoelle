@@ -5,7 +5,7 @@ import java.util.List;
 import page.onram.schnitzelhoelle.backend.model.Restaurant;
 
 public interface IRestaurantService {
-    void create(Restaurant s);
+    Restaurant create(Restaurant s);
 
     List<Restaurant> findAll();
 

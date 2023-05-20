@@ -21,8 +21,8 @@ public class RestaurantService implements IRestaurantService {
     }
 
     @Transactional
-    public void create(Restaurant s) {
-        restaurantDao.create(s);
+    public Restaurant create(Restaurant s) {
+        return restaurantDao.create(s);
     }
 
     public Restaurant findById(int id) throws RestaurantNotFoundException {

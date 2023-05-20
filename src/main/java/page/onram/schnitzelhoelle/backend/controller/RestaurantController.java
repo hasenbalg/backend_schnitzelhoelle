@@ -26,15 +26,11 @@ public class RestaurantController {
     };
 
     @PostMapping("/restaurants")
-    public ResponseEntity<?> create(@RequestBody Restaurant newRestaurant) {
-        try {
-            restaurantService.create(newRestaurant);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+    public Restaurant create(@RequestBody Restaurant newRestaurant) {
+        newRestaurant.setId(0);
+        var createdRestaurant = restaurantService.create(newRestaurant);
+        return createdRestaurant;
     }
-
 
     @GetMapping("/restaurants")
     public List<Restaurant> getAll() throws RestaurantNotFoundException {
@@ -53,7 +49,6 @@ public class RestaurantController {
         return restaurantService.findById(id);
     }
 
-   
     @PutMapping("/restaurants")
     public Restaurant update(
             @RequestBody Restaurant updatedRestaurant) {
