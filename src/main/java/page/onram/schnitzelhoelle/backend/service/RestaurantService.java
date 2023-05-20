@@ -4,38 +4,37 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import page.onram.schnitzelhoelle.backend.controller.exception.RestaurantNotFoundException;
-import page.onram.schnitzelhoelle.backend.dao.IRestaurantDao;
+import page.onram.schnitzelhoelle.backend.dao.IRestaurantRepo;
 import page.onram.schnitzelhoelle.backend.model.Restaurant;
 
 @Service
 public class RestaurantService implements IRestaurantService {
 
-    private IRestaurantDao restaurantDao;
+    private IRestaurantRepo restaurantRepo;
 
     @Autowired
-    public RestaurantService(IRestaurantDao restaurantDao) {
-        this.restaurantDao = restaurantDao;
+    public RestaurantService(IRestaurantRepo restaurantRepo) {
+        this.restaurantRepo = restaurantRepo;
     }
 
-    @Transactional
-    public Restaurant create(Restaurant s) {
-        return restaurantDao.create(s);
+    public Restaurant create(Restaurant r) {
+        r.setId(0);
+        return restaurantRepo.save(r);
     }
 
     public Restaurant findById(int id) throws RestaurantNotFoundException {
-        var restaurant = restaurantDao.findById(id);
+        var restaurant = restaurantRepo.findById(id);
         if (restaurant == null) {
             throw new RestaurantNotFoundException("restaurant with id " + id + " not found");
         } else {
-            return restaurant;
+            return restaurant.get();
         }
     }
 
     public List<Restaurant> findAll() throws RestaurantNotFoundException {
-        var allRestaurants = restaurantDao.findAll();
+        var allRestaurants = restaurantRepo.findAll();
         if (allRestaurants.isEmpty()) {
             throw new RestaurantNotFoundException("No restaurants in db");
         } else {
@@ -43,14 +42,12 @@ public class RestaurantService implements IRestaurantService {
         }
     }
 
-    @Transactional
     public Restaurant update(Restaurant r) {
-        return restaurantDao.update(r);
+        return restaurantRepo.save(r);
     }
 
-    @Transactional
     public void delete(int id) {
-        restaurantDao.delete(id);
+        restaurantRepo.deleteById(id);
     }
 
 }

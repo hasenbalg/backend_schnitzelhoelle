@@ -4,40 +4,39 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import page.onram.schnitzelhoelle.backend.controller.exception.SchnitzelNotFoundException;
-import page.onram.schnitzelhoelle.backend.dao.ISchnitzelDao;
+import page.onram.schnitzelhoelle.backend.dao.ISchnitzelRepo;
 import page.onram.schnitzelhoelle.backend.model.Schnitzel;
 
 @Service
 public class SchnitzelService implements ISchnitzelService {
 
-    private ISchnitzelDao schnitzelDao;
+    private ISchnitzelRepo schnitzelRepo;
 
     @Autowired
-    public SchnitzelService(ISchnitzelDao schnitzelDao) {
-        this.schnitzelDao = schnitzelDao;
+    public SchnitzelService(ISchnitzelRepo schnitzelRepo) {
+        this.schnitzelRepo = schnitzelRepo;
     }
 
-    @Transactional
     public Schnitzel create(Schnitzel s) {
-        return schnitzelDao.create(s);
+        s.setId(0);
+        return schnitzelRepo.save(s);
     }
 
     public Schnitzel findById(int id) throws SchnitzelNotFoundException {
-        var schnitzel = schnitzelDao.findById(id);
+        var schnitzel = schnitzelRepo.findById(id);
         if (schnitzel == null) {
             throw new SchnitzelNotFoundException("schnitzel with id " + id + " not found");
         } else {
-            return schnitzel;
+            return schnitzel.get();
         }
 
     }
 
     public List<Schnitzel> findAll() throws SchnitzelNotFoundException {
 
-        var allSchnitzels = schnitzelDao.findAll();
+        var allSchnitzels = schnitzelRepo.findAll();
         if (allSchnitzels.isEmpty()) {
             throw new SchnitzelNotFoundException("No schnitzels in db");
         } else {
@@ -45,14 +44,12 @@ public class SchnitzelService implements ISchnitzelService {
         }
     }
 
-    @Transactional
     public Schnitzel update(Schnitzel s) {
-        return schnitzelDao.update(s);
+        return schnitzelRepo.save(s);
     }
 
-    @Transactional
     public void delete(int id) {
-        schnitzelDao.delete(id);
+        schnitzelRepo.deleteById(id);
     }
 
 }
